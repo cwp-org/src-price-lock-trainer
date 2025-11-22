@@ -763,6 +763,16 @@
         position: static;
       }
     }
+    /* Breadcrumbs repositioning */
+.breadcrumb-steps {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 10px 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: #9ca3af;
+}
   </style>
 </head>
 <body>
@@ -836,7 +846,7 @@
         As you move through each step, watch how the guaranteed floor price, large-transaction bonus, DOEE’s share, the buyer’s share, and your total revenue respond.
       </div>
     </div>
-
+ <div class="breadcrumb-steps" id="breadcrumbSteps"></div>
     <section class="layout">
       <!-- LEFT: controls -->
       <div class="card" id="controlsCard">
@@ -845,7 +855,6 @@
           <span class="badge" id="modeBadge">Guided • Riverbend case</span>
         </div>
 
-        <div class="breadcrumb-steps" id="breadcrumbSteps"></div>
 
         <div id="freeHint" class="free-hint" style="display:none;">
           Free play is on. Adjust any inputs below or load a scenario on the right. Use this to explore beyond the Riverbend case.
@@ -1993,6 +2002,7 @@
   </script>
 </body>
 </html>
+
 
 
 
