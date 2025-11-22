@@ -57,30 +57,35 @@
     /* CWP logo in header */
 .header-main {
   display: flex;
-  flex-direction: column;
-  align-items: center; 
-  text-align: center;       /* makes h1 + p centered */
-  gap: 14px;
+  flex-direction: column;   /* stack logo over title */
+  align-items: flex-start;  /* left-align everything */
+  gap: 14px;                /* spacing between logo + title */
 }
 
-    .cwp-logo {
-      height: 60px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 0 6px rgba(0,0,0,0.4));
-    }
+.logo-wrap {
+  display: flex;
+  align-items: flex-start;
+}
 
-    .title-block h1 {
-      margin: 0;
-      font-size: 22px;
-      letter-spacing: 0.03em;
-    }
+.cwp-logo {
+  height: 55px;             /* adjust if you want it bigger */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(0,0,0,0.4));
+}
 
-    .title-block p {
-      margin: 4px 0 0;
-      font-size: 13px;
-      color: var(--text-soft);
-    }
+.title-block h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.03em;
+}
+
+.title-block p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
 
     .mode-switch {
       display: flex;
@@ -1988,6 +1993,7 @@
   </script>
 </body>
 </html>
+
 
 
 
