@@ -56,13 +56,14 @@
 
     /* CWP logo in header */
     .header-main {
+      flex-direction: column;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 10px;
     }
 
     .cwp-logo {
-      height: 55px;
+      height: 60px;
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 0 6px rgba(0,0,0,0.4));
@@ -795,14 +796,17 @@
 
   <div class="app-shell">
 <header class="app-header">
-  <div class="header-main">
+<div class="header-main">
+  <div class="logo-wrap">
     <img class="cwp-logo" src="CWP-white-01.png" alt="Center for Watershed Protection logo">
-    
-    <div class="title-block">
-      <h1>SRC Price Lock Trainer</h1>
-      <p>Explore how one rain garden’s SRCs turn into revenue through Price Lock agreements, subsidies, and buyer behavior.</p>
-    </div>
   </div>
+
+  <div class="title-block">
+    <h1>SRC Price Lock Trainer</h1>
+    <p>Explore how one rain garden’s SRCs turn into revenue through Price Lock agreements, subsidies, and buyer behavior.</p>
+  </div>
+</div>
+
 
   <div class="mode-switch">
     <label>Mode</label>
@@ -1983,3 +1987,4 @@
   </script>
 </body>
 </html>
+
