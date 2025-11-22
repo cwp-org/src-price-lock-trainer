@@ -1,5 +1,4 @@
-<script>
-    const PROJECT_MAX_SRC = 20000;  // Riverbend single-project cap
+ const PROJECT_MAX_SRC = 20000;  // Riverbend single-project cap
     const PROGRAM_LARGE_CAP = 100000; // Program-wide cap for large-transaction bonus in Free play
 
     const state = {
@@ -900,4 +899,4 @@
     }
 
     init();
-  </script>
+   <div class="tooltip-bubble" id="tooltipBubble"></div>
