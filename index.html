@@ -985,10 +985,11 @@
             </select>
 
             <div style="margin-top:6px;">
-              <label class="inline-toggle">
-                <input type="checkbox" id="in18Months" checked>
-                <span>Sale happens within the first 18 months of the agreement</span>
-              </label>
+            <!-- DEV: 18-month period toggle (we’ll strike this out in Years 7–12) -->
+<label class="inline-toggle" id="in18Toggle">
+  <input type="checkbox" id="in18Months" checked>
+  <span id="in18LabelText">Sale happens within the first 18 months of the agreement</span>
+</label>
               <div class="hint">
                 In the real program, a Purchase Agreement starts with an <strong>18-month subsidy-only period</strong>. During that time, DOEE supports you through market + subsidy but does not buy SRCs directly.
               </div>
@@ -1039,7 +1040,7 @@
               <span class="value-label">Current SRC price</span>
               <span class="value-pill"><span id="sSliderValue">$2.10</span> per SRC</span>
             </div>
-            <input type="range" id="sSlider" min="1.50" max="3.00" step="0.01" value="2.10">
+            <input type="range" id="sSlider" min="0.40" max="3.00" step="0.01" value="2.10">
             <div class="hint">
               Zone: <strong><span id="sZoneLabel">Balanced</span></strong> – <span id="sZoneText">above your floor price but still likely competitive for buyers, with DOEE helping cover part of the amount.</span>
             </div>
@@ -1211,6 +1212,9 @@
       saleTypeHint: document.getElementById("saleTypeHint"),
       doeeRadioLabel: document.getElementById("doeeRadioLabel"),
       marketRadioLabel: document.getElementById("marketRadioLabel"),
+      in18Toggle: document.getElementById("in18Toggle"),
+      in18LabelText: document.getElementById("in18LabelText"),
+
       sSlider: document.getElementById("sSlider"),
       sSliderValue: document.getElementById("sSliderValue"),
       sZoneLabel: document.getElementById("sZoneLabel"),
@@ -1385,6 +1389,57 @@
         level: "below"
       };
     }
+    // DEV: Special behavior for late-year (7–12) credits
+    // - Turns off the 18-month “subsidy-only” window
+    // - Forces DOEE-only sale path
+    // - Locks SRC price to the late-year floor when selling to DOEE
+    function applyLateYearVisualRules() {
+      const isLateYear = state.yearBand === "7-12";
+
+      // 1) 18-month toggle: cannot apply in Years 7–12
+      if (isLateYear) {
+        state.in18Months = false;
+        els.in18Months.checked = false;
+        if (els.in18LabelText) {
+          els.in18LabelText.classList.add("label-path-disabled");
+        }
+      } else {
+        if (els.in18LabelText) {
+          els.in18LabelText.classList.remove("label-path-disabled");
+        }
+      }
+
+      // 2) Sale path: in late years, buyer+subsidy path is not realistic
+      if (isLateYear) {
+        // strike through “Sell to a buyer with DOEE subsidy”
+        if (els.marketRadioLabel) {
+          els.marketRadioLabel.classList.add("label-path-disabled");
+        }
+
+        // force DOEE-only sale path
+        const doeeRadio = els.saleTypeRadios.find(r => r.value === "doee");
+        if (doeeRadio) {
+          doeeRadio.checked = true;
+          state.saleType = "doee";
+        }
+      } else {
+        // restore normal styling when not in late years
+        if (els.marketRadioLabel) {
+          els.marketRadioLabel.classList.remove("label-path-disabled");
+        }
+      }
+
+      // 3) Price slider: in late years with DOEE purchase, price = floor
+      const P_late = getFloorPrice(state.location, state.yearBand);
+
+      if (isLateYear && state.saleType === "doee") {
+        state.srcPrice = P_late;
+        els.sSlider.value = P_late.toFixed(2);
+        els.sSlider.disabled = true;
+      } else {
+        els.sSlider.disabled = false;
+      }
+    }
 
     function getStepNarrative() {
       if (state.mode !== "guided") return null;
@@ -1495,7 +1550,10 @@
       state.in18Months = els.in18Months.checked;
       state.saleType = getSalePath();
       state.srcPrice = parseFloat(els.sSlider.value) || state.srcPrice;
+// DEV: Apply special rules when using late-year (7–12) credits
+      applyLateYearVisualRules();
 
+      els.qValue.textContent = formatInteger(state.dealSize);
       const P = getFloorPrice(state.location, state.yearBand);
 
       const capForThisRun =
@@ -2135,4 +2193,5 @@
   </script>
 </body>
 </html>
+
 
