@@ -670,6 +670,37 @@
       color: #9ca3af;
       margin-bottom: 4px;
     }
+    /* Small pencil icon that only appears in Free play */
+    .free-icon {
+      font-size: 11px;
+      opacity: 0;
+      transform: translateY(-1px);
+      margin-left: 4px;
+      transition: opacity 0.15s ease-out;
+    }
+
+    /* Turn the icon on in Free play */
+    body[data-mode="free"] .free-icon {
+      opacity: 1;
+    }
+
+    /* Rows that should softly glow when editable in Free play */
+    .control-row.free-highlight {
+      transition: border-color 0.2s ease-out,
+                  box-shadow 0.2s ease-out,
+                  background-color 0.2s ease-out;
+    }
+
+    /* Soft glow only when in Free play mode */
+    body[data-mode="free"] .control-row.free-highlight {
+      border-color: rgba(34,197,94,0.7);
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.25);
+      background: radial-gradient(
+        circle at top left,
+        rgba(34,197,94,0.12),
+        rgba(15,23,42,0.96)
+      );
+    }
 
     .modal-backdrop {
       position: fixed;
@@ -853,14 +884,16 @@
         </div>
 
         <div id="controlsContainer">
-          <div class="control-row" data-step="0" id="rowDealSize">
+           <div class="control-row free-highlight" data-step="0" id="rowDealSize">
             <div class="lock-pill">🔒 Later in guided mode</div>
-            <div class="field-label">
+                      <div class="field-label">
               <div class="field-main">
                 <span>How many SRCs are you selling in this deal?</span>
+                <span class="free-icon" aria-hidden="true">✏️</span>
               </div>
               <span class="step-tag">Step 1</span>
             </div>
+
 
             <!-- Guided / slider view -->
             <div id="guidedDealSizeControls">
@@ -895,14 +928,16 @@
             <!-- *** END PATCH *** -->
           </div>
 
-          <div class="control-row" data-step="1" id="rowLocationYear">
+          <div class="control-row free-highlight" data-step="1" id="rowLocationYear">
             <div class="lock-pill">🔒 Unlocks in Step 2</div>
-            <div class="field-label">
+                        <div class="field-label">
               <div class="field-main">
                 <span>Where and when are these SRCs coming from?</span>
+                <span class="free-icon" aria-hidden="true">✏️</span>
               </div>
               <span class="step-tag">Step 2</span>
             </div>
+
             <div class="field-label" style="margin-top:2px;">
               <span class="field-main">
                 <span>Project location in DC</span>
@@ -929,11 +964,12 @@
             </div>
           </div>
 
-          <div class="control-row" data-step="2" id="rowAgreement">
+          <div class="control-row free-highlight" data-step="2" id="rowAgreement">
             <div class="lock-pill">🔒 Unlocks in Step 3</div>
-            <div class="field-label">
+              <div class="field-label">
               <div class="field-main">
                 <span>What kind of Price Lock agreement did you sign?</span>
+                <span class="free-icon" aria-hidden="true">✏️</span>
               </div>
               <span class="step-tag">Step 3</span>
             </div>
@@ -959,11 +995,12 @@
             </div>
           </div>
 
-          <div class="control-row" data-step="3" id="rowSalePath">
+        <div class="control-row free-highlight" data-step="3" id="rowSalePath">
             <div class="lock-pill">🔒 Unlocks in Step 4</div>
-            <div class="field-label">
+             <div class="field-label">
               <div class="field-main">
                 <span>How do you want to sell these SRCs?</span>
+                <span class="free-icon" aria-hidden="true">✏️</span>
               </div>
               <span class="step-tag">Step 4</span>
             </div>
@@ -988,12 +1025,13 @@
             </div>
           </div>
 
-          <div class="control-row" data-step="4" id="rowPrice">
+          <div class="control-row free-highlight" data-step="4" id="rowPrice">
             <div class="lock-pill">🔒 Unlocks in Step 5</div>
             <div class="field-label">
               <div class="field-main">
                 <span>Set your SRC price on the market</span>
                 <span class="info-icon" data-tooltip="This is the price per SRC you hope to receive in a market sale. DOEE may cover part of this price as a subsidy, and the buyer pays the rest. If you set the price too high, DOEE will eventually stop adding subsidy and the buyer must cover the full amount.">i</span>
+                <span class="free-icon" aria-hidden="true">✏️</span>
               </div>
               <span class="step-tag">Step 5</span>
             </div>
@@ -1853,8 +1891,9 @@
       recalc();
     }
 
-    function setMode(newMode) {
+      function setMode(newMode) {
       state.mode = newMode;
+      document.body.setAttribute("data-mode", newMode); // let CSS know which mode we’re in
       if (newMode === "guided") {
         els.modeGuidedBtn.classList.add("active");
         els.modeFreeBtn.classList.remove("active");
@@ -2096,3 +2135,4 @@
   </script>
 </body>
 </html>
+
