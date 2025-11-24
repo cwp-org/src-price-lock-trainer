@@ -1897,19 +1897,28 @@
         els.guidedDots.appendChild(dot);
       }
 
-      els.breadcrumbSteps.innerHTML = "";
-      guidedBreadcrumbLabels.forEach((label, idx) => {
-        const span = document.createElement("span");
-        span.className = "crumb" + (idx === i ? " active" : "");
-        span.textContent = label;
-        els.breadcrumbSteps.appendChild(span);
-        if (idx < guidedBreadcrumbLabels.length - 1) {
-          const sep = document.createElement("span");
-          sep.className = "crumb-separator";
-          sep.textContent = "›";
-          els.breadcrumbSteps.appendChild(sep);
-        }
-      });
+// DEV: Breadcrumbs — highlight only in guided mode
+els.breadcrumbSteps.innerHTML = "";
+guidedBreadcrumbLabels.forEach((label, idx) => {
+  const span = document.createElement("span");
+
+  if (state.mode === "guided" && idx === state.guidedIndex) {
+    span.className = "crumb active";
+  } else {
+    span.className = "crumb";
+  }
+
+  span.textContent = label;
+  els.breadcrumbSteps.appendChild(span);
+
+  if (idx < guidedBreadcrumbLabels.length - 1) {
+    const sep = document.createElement("span");
+    sep.className = "crumb-separator";
+    sep.textContent = "›";
+    els.breadcrumbSteps.appendChild(sep);
+  }
+});
+
 
       els.guidedBackBtn.disabled = i === 0;
       els.guidedNextBtn.textContent =
@@ -2193,5 +2202,6 @@
   </script>
 </body>
 </html>
+
 
 
