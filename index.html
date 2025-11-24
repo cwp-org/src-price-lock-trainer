@@ -54,38 +54,37 @@
       gap: 16px;
     }
 
-    /* CWP logo in header */
-.header-main {
-  display: flex;
-  flex-direction: column;   /* stack logo over title */
-  align-items: flex-start;  /* left-align everything */
-  gap: 14px;                /* spacing between logo + title */
-}
+    /* CWP logo + title block */
+    .header-main {
+      display: flex;
+      flex-direction: column;   /* stack logo over title */
+      align-items: flex-start;  /* left-align everything */
+      gap: 14px;
+    }
 
-.logo-wrap {
-  display: flex;
-  align-items: flex-start;
-}
+    .logo-wrap {
+      display: flex;
+      align-items: flex-start;
+    }
 
-.cwp-logo {
-  height: 55px;             /* adjust if you want it bigger */
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 6px rgba(0,0,0,0.4));
-}
+    .cwp-logo {
+      height: 55px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(0,0,0,0.4));
+    }
 
-.title-block h1 {
-  margin: 0;
-  font-size: 22px;
-  letter-spacing: 0.03em;
-}
+    .title-block h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0.03em;
+    }
 
-.title-block p {
-  margin: 4px 0 0;
-  font-size: 13px;
-  color: var(--text-soft);
-}
-
+    .title-block p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
 
     .mode-switch {
       display: flex;
@@ -449,15 +448,18 @@
       background: var(--accent);
     }
 
+    /* Breadcrumbs centered under scenario */
     .breadcrumb-steps {
       font-size: 10px;
       color: #9ca3af;
-      margin-top: 2px;
-      margin-bottom: 4px;
+      margin-top: 10px;
+      margin-bottom: 6px;
       display: flex;
       flex-wrap: wrap;
       gap: 4px;
       align-items: center;
+      justify-content: center;
+      letter-spacing: 0.05em;
     }
 
     .crumb {
@@ -763,16 +765,6 @@
         position: static;
       }
     }
-    /* Breadcrumbs repositioning */
-.breadcrumb-steps {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin: 10px 0 6px;
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  color: #9ca3af;
-}
   </style>
 </head>
 <body>
@@ -811,31 +803,29 @@
   </div>
 
   <div class="app-shell">
-<header class="app-header">
-<div class="header-main">
-  <div class="logo-wrap">
-    <img class="cwp-logo" src="CWP-white-01.png" alt="Center for Watershed Protection logo">
-  </div>
+    <header class="app-header">
+      <div class="header-main">
+        <div class="logo-wrap">
+          <img class="cwp-logo" src="CWP-white-01.png" alt="Center for Watershed Protection logo">
+        </div>
 
-  <div class="title-block">
-    <h1>SRC Price Lock Trainer</h1>
-    <p>Explore how one rain garden’s SRCs turn into revenue through Price Lock agreements, subsidies, and buyer behavior.</p>
-  </div>
-</div>
+        <div class="title-block">
+          <h1>SRC Price Lock Trainer</h1>
+          <p>Explore how one rain garden’s SRCs turn into revenue through Price Lock agreements, subsidies, and buyer behavior.</p>
+        </div>
+      </div>
 
-
-  <div class="mode-switch">
-    <label>Mode</label>
-    <div class="mode-buttons">
-      <button class="mode-btn active" id="modeGuidedBtn">Guided case study</button>
-      <button class="mode-btn" id="modeFreeBtn">Free play</button>
-    </div>
-    <div class="mode-note" id="modeNote">
-      Guided mode walks you through the Riverbend rain garden step by step. You can switch to Free play any time.
-    </div>
-  </div>
-</header>
-
+      <div class="mode-switch">
+        <label>Mode</label>
+        <div class="mode-buttons">
+          <button class="mode-btn active" id="modeGuidedBtn">Guided case study</button>
+          <button class="mode-btn" id="modeFreeBtn">Free play</button>
+        </div>
+        <div class="mode-note" id="modeNote">
+          Guided mode walks you through the Riverbend rain garden step by step. You can switch to Free play any time.
+        </div>
+      </div>
+    </header>
 
     <div class="scenario-panel" id="scenarioPanel">
       <div class="scenario-title" id="scenarioName">Guided Case: Riverbend Elementary Rain Garden</div>
@@ -846,7 +836,10 @@
         As you move through each step, watch how the guaranteed floor price, large-transaction bonus, DOEE’s share, the buyer’s share, and your total revenue respond.
       </div>
     </div>
- <div class="breadcrumb-steps" id="breadcrumbSteps"></div>
+
+    <!-- Breadcrumbs centered below scenario bar -->
+    <div class="breadcrumb-steps" id="breadcrumbSteps"></div>
+
     <section class="layout">
       <!-- LEFT: controls -->
       <div class="card" id="controlsCard">
@@ -854,7 +847,6 @@
           <div class="card-title">Project & sale setup</div>
           <span class="badge" id="modeBadge">Guided • Riverbend case</span>
         </div>
-
 
         <div id="freeHint" class="free-hint" style="display:none;">
           Free play is on. Adjust any inputs below or load a scenario on the right. Use this to explore beyond the Riverbend case.
@@ -869,14 +861,38 @@
               </div>
               <span class="step-tag">Step 1</span>
             </div>
-            <div class="value-row">
-              <span class="value-label">Current deal size</span>
-              <span class="value-pill"><span id="qValue">20,000</span> SRCs</span>
+
+            <!-- Guided / slider view -->
+            <div id="guidedDealSizeControls">
+              <div class="value-row">
+                <span class="value-label">Current deal size</span>
+                <span class="value-pill"><span id="qValue">20,000</span> SRCs</span>
+              </div>
+              <input type="range" id="qSlider" min="5000" max="20000" step="5000" value="20000">
+              <div class="hint" id="qHint">
+                This rain garden can only generate at most <strong>20,000 SRCs</strong>. In this guided case, the slider stops there. Every 5,000 SRCs you include in this deal can add a little large-transaction bonus.
+              </div>
             </div>
-            <input type="range" id="qSlider" min="5000" max="20000" step="5000" value="20000">
-            <div class="hint" id="qHint">
-              This rain garden can only generate at most <strong>20,000 SRCs</strong>. In this guided case, the slider stops there. Every 5,000 SRCs you include in this deal can add a little large-transaction bonus.
+
+            <!-- *** PATCH: Free play text input for deal size *** -->
+            <div id="freeplayDealSize" style="display:none; margin-top:6px;">
+              <div class="field-label" style="margin-bottom:4px;">
+                <span>Type the number of SRCs for this deal</span>
+              </div>
+              <input
+                type="text"
+                id="qInputFree"
+                placeholder="e.g., 20,000 or 290000"
+                style="width:100%; padding:6px 10px; font-size:13px;"
+              >
+              <div id="qInputError" style="font-size:11px; color:#f43f5e; margin-top:4px; display:none;">
+                Please enter a whole number between 1 and 500,000.
+              </div>
+              <div class="hint">
+                You can type the number with or without commas. In this deal, you’re deciding how many SRCs you bring to market.
+              </div>
             </div>
+            <!-- *** END PATCH *** -->
           </div>
 
           <div class="control-row" data-step="1" id="rowLocationYear">
@@ -1098,8 +1114,8 @@
   <div class="tooltip-bubble" id="tooltipBubble"></div>
 
   <script>
-    const PROJECT_MAX_SRC = 20000;  // Riverbend single-project cap
-    const PROGRAM_LARGE_CAP = 100000; // Program-wide cap for large-transaction bonus in Free play
+    const PROJECT_MAX_SRC = 20000;     // Riverbend single-project cap
+    const PROGRAM_LARGE_CAP = 100000;  // Program-wide cap for large-transaction bonus in Free play
 
     const state = {
       mode: "guided",
@@ -1140,9 +1156,15 @@
       controlsContainer: document.getElementById("controlsContainer"),
       controlRows: Array.from(document.querySelectorAll(".control-row")),
 
+      // Deal size controls
       qSlider: document.getElementById("qSlider"),
       qValue: document.getElementById("qValue"),
       qHint: document.getElementById("qHint"),
+      guidedDealSizeControls: document.getElementById("guidedDealSizeControls"),
+      freeplayDealSize: document.getElementById("freeplayDealSize"),
+      qInputFree: document.getElementById("qInputFree"),
+      qInputError: document.getElementById("qInputError"),
+
       locationSelect: document.getElementById("locationSelect"),
       yearBandSelect: document.getElementById("yearBandSelect"),
       agreementTypeSelect: document.getElementById("agreementTypeSelect"),
@@ -1391,16 +1413,50 @@
       }
     }
 
+    // *** PATCH: helper to read deal size from slider or text input ***
+    function getDealSizeFromControls() {
+      if (state.mode === "free") {
+        const raw = els.qInputFree.value.trim();
+
+        // If box is empty, fall back to slider value (or last state)
+        if (!raw) {
+          const fallback = parseInt(els.qSlider.value, 10) || state.dealSize || 0;
+          els.qInputError.style.display = "none";
+          return fallback;
+        }
+
+        const cleaned = raw.replace(/[,\s]/g, "");
+        const parsed = parseInt(cleaned, 10);
+
+        if (!Number.isFinite(parsed) || parsed < 1 || parsed > 500000) {
+          els.qInputError.style.display = "block";
+          return state.dealSize || 0;
+        }
+
+        els.qInputError.style.display = "none";
+        return parsed;
+      } else {
+        // Guided mode always uses slider within 0–20,000
+        els.qInputError.style.display = "none";
+        return parseInt(els.qSlider.value, 10) || 0;
+      }
+    }
+    // *** END PATCH ***
+
     function recalc() {
-      state.dealSize = parseInt(els.qSlider.value, 10) || 0;
+      // *** PATCH: use helper to derive deal size ***
+      state.dealSize = getDealSizeFromControls();
+      // Keep slider in sync (even when hidden) so scenarios / hints work
+      els.qSlider.value = String(Math.min(state.dealSize, parseInt(els.qSlider.max, 10) || state.dealSize));
+      els.qValue.textContent = formatInteger(state.dealSize);
+      // *** END PATCH ***
+
       state.location = els.locationSelect.value;
       state.yearBand = els.yearBandSelect.value;
       state.agreementType = els.agreementTypeSelect.value;
       state.in18Months = els.in18Months.checked;
       state.saleType = getSalePath();
       state.srcPrice = parseFloat(els.sSlider.value) || state.srcPrice;
-
-      els.qValue.textContent = formatInteger(state.dealSize);
 
       const P = getFloorPrice(state.location, state.yearBand);
 
@@ -1434,7 +1490,8 @@
       if (showPriceTeaching) {
         warnings = warnings.concat(floorMessages);
       }
-      // In guided Step 2, explain why total revenue may stay constant in a buyer + subsidy sale
+
+      // Step 2 explanation for constant total revenue in market sale
       if (
         state.mode === "guided" &&
         state.guidedIndex === 1 &&
@@ -1444,7 +1501,6 @@
           "In this buyer + DOEE subsidy sale, changing location or credit years mainly shifts how DOEE and the buyer split your SRC price. Because your SRC price and deal size have not changed, your total revenue stays the same while their shares move around."
         );
       }
-
 
       state.srcPrice = S;
       els.sSlider.value = S.toFixed(2);
@@ -1777,6 +1833,7 @@
       state.srcPrice = 2.03;
 
       els.qSlider.value = state.dealSize;
+      els.qValue.textContent = formatInteger(state.dealSize);
       els.locationSelect.value = state.location;
       els.yearBandSelect.value = state.yearBand;
       els.agreementTypeSelect.value = state.agreementType;
@@ -1788,6 +1845,10 @@
 
       els.sSlider.value = state.srcPrice.toFixed(2);
       els.sSliderValue.textContent = formatCurrency(state.srcPrice);
+
+      // Clear any free play input when resetting guided defaults
+      els.qInputFree.value = "";
+      els.qInputError.style.display = "none";
 
       recalc();
     }
@@ -1808,6 +1869,9 @@
         els.scenarioFocusPanel.style.display = "none";
         state.scenarioKey = "guided";
 
+        // Guided: slider visible, text box hidden, slider capped at project max
+        els.guidedDealSizeControls.style.display = "block";
+        els.freeplayDealSize.style.display = "none";
         els.qSlider.max = String(PROJECT_MAX_SRC);
         if (state.dealSize > PROJECT_MAX_SRC) {
           state.dealSize = PROJECT_MAX_SRC;
@@ -1831,9 +1895,17 @@
         els.scenarioBar.style.display = "flex";
         state.scenarioKey = els.scenarioSelect.value || "none";
 
-        els.qSlider.max = "100000";
+        // Free play: text box visible, slider hidden; allow up to 500,000
+        els.guidedDealSizeControls.style.display = "none";
+        els.freeplayDealSize.style.display = "block";
+        els.qSlider.max = "500000";
         els.qHint.innerHTML =
-          'In Free play you can slide above <strong>20,000 SRCs</strong> to imagine aggregating multiple projects into one deal. The large-transaction bonus keeps growing in 5,000-SRC steps until around <strong>100,000 SRCs</strong>, where the program’s bonus cap is reached.';
+          'In Free play you can imagine selling SRCs from multiple projects. The large-transaction bonus keeps growing in 5,000-SRC steps until around <strong>100,000 SRCs</strong>, where the program’s bonus cap is reached.';
+
+        // If free-play box is empty, seed it with current dealSize
+        if (!els.qInputFree.value.trim()) {
+          els.qInputFree.value = formatInteger(state.dealSize || 20000);
+        }
 
         updateControlLockStates();
         recalc();
@@ -1889,6 +1961,13 @@
       });
       els.sSlider.value = state.srcPrice.toFixed(2);
       els.sSliderValue.textContent = formatCurrency(state.srcPrice);
+
+      // *** PATCH: keep Free play text input in sync with scenario deal size ***
+      if (state.mode === "free") {
+        els.qInputFree.value = formatInteger(state.dealSize);
+        els.qInputError.style.display = "none";
+      }
+      // *** END PATCH ***
 
       recalc();
     }
@@ -1950,6 +2029,21 @@
       });
       els.sSlider.addEventListener("input", recalc);
 
+      // *** PATCH: Free play text input events ***
+      els.qInputFree.addEventListener("input", () => {
+        // Live update as they type; recalc() handles validation and keeps slider + stats in sync
+        recalc();
+      });
+      els.qInputFree.addEventListener("blur", () => {
+        // On blur, normalize value to formatted integer if valid
+        const cleaned = els.qInputFree.value.replace(/[,\s]/g, "");
+        const parsed = parseInt(cleaned, 10);
+        if (Number.isFinite(parsed) && parsed >= 1 && parsed <= 500000) {
+          els.qInputFree.value = formatInteger(parsed);
+        }
+      });
+      // *** END PATCH ***
+
       els.guidedBackBtn.addEventListener("click", () => {
         if (state.guidedIndex > 0) {
           state.guidedIndex--;
@@ -2002,8 +2096,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
