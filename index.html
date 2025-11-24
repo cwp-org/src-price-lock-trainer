@@ -2015,6 +2015,11 @@ guidedBreadcrumbLabels.forEach((label, idx) => {
 
         updateControlLockStates();
         recalc();
+    // DEV: In Free play, keep breadcrumbs visible but neutral (no active highlight)
+    els.breadcrumbSteps
+      .querySelectorAll(".crumb")
+      .forEach(c => c.classList.remove("active"));
+
       }
     }
 
@@ -2202,6 +2207,7 @@ guidedBreadcrumbLabels.forEach((label, idx) => {
   </script>
 </body>
 </html>
+
 
 
 
